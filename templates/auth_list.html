@@ -1,0 +1,116 @@
+<!--
+ * @Author: 殷清贺 987746808@qq.com
+ * @Date: 2022-10-27 16:48:52
+ * @LastEditors: 殷清贺 987746808@qq.com
+ * @LastEditTime: 2022-11-01 22:22:23
+ * @FilePath: \HTMLd:\C#\python\Django\django_2022\bms\templates\auth_list.html
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {%load static%}
+
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="{%static 'js/bootstrap.min.css'%}">
+  <link rel="stylesheet" type="text/css" href="{%static 'css/auth_list.css'%}">
+  <script src="{%static 'js/auth_list.js'%}"></script>
+  <!--    <link rel="stylesheet" href="http://127.0.0.1:8000/static/js/bootstrap.min.css">-->
+</head>
+
+<body>
+  <table class="table">
+    <tr>dsfsf</tr>
+  </table>
+
+
+  <div class="table-responsive table-bordered">
+    <!-- <button><a href="/add_author/">添加</a></button> -->
+    <button><a href="{% url 'add_author'%}">添加</a></button>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <td class="active">id</td>
+          <td class="success">name</td>
+          <td class="warning">age</td>
+          <td class="danger">sex</td>
+          <td class="info">tel</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% for au in author_list%}
+        <tr>
+          <td id="id{{au.id}}">{{au.id}}</td>
+          <td id="name{{au.id}}">{{au.name}}</td>
+          <td id="age{{au.id}}">{{au.age}}</td>
+          <td id="sex{{au.id}}">{{au.sex}}</td>
+          <td id="tel{{au.id}}">{{au.tel}}</td>
+          <td><a href="#" class="btn btn-default btn-lg active" role="button" onclick="add({{au.id}})">编辑</a></td>
+
+          <td><a href="#" class="btn btn-primary btn-lg active" role="button" onclick="dele({{au.id}})">删除</a></td>
+        </tr>
+        {%endfor%}
+
+      </tbody>
+    </table>
+  </div>
+
+  <!-- <div id="contes">
+    <div style="width: 500px;height:40px">
+      <hr>
+      <form style="margin-left: 100px;" action="post">
+        用户名：<input type="text" value="" name="username"><br>
+        密码：<input type="password" value="" name="password"><br>
+        <input type="submit" value="提交">
+      </form>
+    </div>
+  </div>-->
+  <div id="all_light">
+
+  </div>
+  <div id="contes">
+    <div id="error" onclick="disappear()"></div>
+
+    <div style="width: 500px;height:40px">
+      <form action="{%url 'edit_author'%}" method="POST">
+        {% csrf_token %}
+        <div>
+          <input type="text" name="id" id="id">
+        </div>
+        <div class="form-group">
+          <label for="name">s姓名</label>
+          <input type="text" class="form-control" id="name" name="edit_name" placeholder="姓名">
+        </div>
+        <div class="form-group">
+          <label for="sex">性别：
+            <select id="sex" name="edit_sex">
+              <option value="男">男</option>
+              <option value="女">女</option>
+            </select>
+          </label>
+        </div>
+        <div class="form-group">
+          <label for="age">年龄</label>
+          <input type="text" class="form-control" id="age" name="edit_age" placeholder="年龄">
+        </div>
+        <div class="form-group">
+          <label for="tel">联系方式：</label>
+          <input type="text" class="form-control" id="tel" name="edit_tel" placeholder="联系方式：">
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"> Check me out
+          </label>
+        </div>
+        <button type="submit" class="btn btn-default">修改</button>
+      </form>
+    </div>
+  </div>
+
+</body>
+
+</html>

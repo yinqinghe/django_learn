@@ -1,0 +1,62 @@
+<!--
+ * @Author: 殷清贺 987746808@qq.com
+ * @Date: 2022-10-27 17:15:47
+ * @LastEditors: 殷清贺 987746808@qq.com
+ * @LastEditTime: 2022-11-05 17:43:47
+ * @FilePath: \HTMLd:\C#\python\Django\django_2022\bms\templates\book_list.html
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {%load static%}
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{%static 'js/bootstrap.min.css'%}">
+</head>
+
+<body>
+    <h1>数据展示</h1>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>title</th>
+                            <th>出版日期</th>
+                            <th>价格</th>
+                            <th>出版商ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for book_obj in book_objs%}
+                        <tr>
+                            <td>{{book_obj.pk}}</td>
+                            <td>{{book_obj.title}}</td>
+                            <td>{{book_obj.publishDate}}</td>
+                            <td>{{book_obj.price}}</td>
+                            <td>{{book_obj.publish_id}}</td>
+                            <td>{{book_obj.publish.name}}</td>
+                            <!-- <td>{%for p in book_objs%}
+                                {{p.publish.name}}
+                                {%endfor%}
+                            </td> -->
+                            <td>
+                                <a class="btn btn-warning" href="{%url 'edit_book' book_obj.pk %}">编辑</a>
+                                <a class="btn btn-warning" href="{%url 'delete_book' book_obj.pk %}">删除</a>
+
+                            </td>
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

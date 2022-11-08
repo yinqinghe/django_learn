@@ -1,0 +1,84 @@
+<!--
+ * @Author: 殷清贺 987746808@qq.com
+ * @Date: 2022-10-27 16:48:52
+ * @LastEditors: 殷清贺 987746808@qq.com
+ * @LastEditTime: 2022-10-28 17:11:44
+ * @FilePath: \HTMLd:\C#\python\Django\django_2022\bms\templates\auth_list.html
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {%load static%}
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{%static 'js/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{%static 'css/auth_list.css'%}">
+
+    <!--    <link rel="stylesheet" href="http://127.0.0.1:8000/static/js/bootstrap.min.css">-->
+</head>
+
+<body>
+    <div>
+        {% for au in author_list%}
+        <div>{{au.name}}</div>
+        {%endfor%}
+    </div>
+    <table class="table">
+        <tr>dsfsf</tr>
+    </table>
+    <form>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputFile">File input</label>
+            <input type="file" id="exampleInputFile">
+            <p class="help-block">Example block-level help text here.</p>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox"> Check me out
+            </label>
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    <div class="table-responsive table-bordered">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td class="active">id</td>
+                    <td class="success">name</td>
+                    <td class="warning">age</td>
+                    <td class="danger">sex</td>
+                    <td class="info">tel</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for au in author_list%}
+                <tr>
+                    <td>{{au.id}}</td>
+                    <td>{{au.name}}</td>
+                    <td>{{au.age}}</td>
+                    <td>{{au.sex}}</td>
+                    <td>{{au.tel}}</td>
+                    <td><a href="#" class="btn btn-default btn-lg active" role="button">编辑</a></td>
+
+                    <td><a href="#" class="btn btn-primary btn-lg active" role="button">删除</a></td>
+                </tr>
+                {%endfor%}
+
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

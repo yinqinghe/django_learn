@@ -1,0 +1,59 @@
+.btn-lg{
+    background: #0f0f0f;
+}
+.active{
+    background: #0f0f0f;
+    /* width: 180px; */
+}
+
+#all_litgh{
+    opacity: 0.8;
+    width: 100%;
+    height: 2300px;
+    background: #0f0f0f;
+    position: absolute;
+    top: 0;
+    display: block;
+    z-index: 2;
+
+}
+
+#contes{
+    width: 500px;
+    height: 500px;
+    background: rgb(0, 253, 253);
+    display: none;
+    z-index: 2;
+    position: absolute;
+    top: 100px;
+    left: 400px;
+}
+
+#error{
+    width: 15px;
+    height: 15px;
+    margin: auto;
+    position: relative;
+    margin-left: 0 4px 4px 0;
+    display: none;
+}
+#error::before,
+
+#error::after{
+    content: "";
+    position: absolute;
+    height: 27px;
+    width: 5px;
+    bottom: 203px;
+    left: 394px;
+    background: red;
+}
+#error::before{transform: rotate(45deg);}
+
+#error::after{transform: rotate(-45deg);}
+
+
+#error-loca{
+left: 100px;
+}
+
