@@ -5,6 +5,7 @@ from datetime import date
 
 import pytz
 from django.db.models import Count,Avg,Max,Min,Sum
+from django.db.models import Q,F
 if __name__=='__main__':
     os.environ.setdefault("DJANGO_SETTINGS_MODULE","bms.settings")
     import  django
@@ -43,18 +44,44 @@ if __name__=='__main__':
 
 # 聚合查询
     queryResult=Book.objects.all().aggregate(avg=Avg('price'),max=Max('price'),)
-# 分组查询
-    queryResult=
+# 分组查询     统计出每一个出版社的最便宜的书
+    queryResult=Publish.objects.values("book__title","name").annotate(MinPrice=Min("book__price"))
+    # queryResult=Book.objects.annotate(MinPrice=Max("price")).values("publish__name",'price','title')
+    # 统计每一本书的作者个数
+    # queryResult=Book.objects.annotate(authorsNum=Count('authors__name')).values('title','authorsNum')
+   # 统计每一本以py开头的书籍的作者个数
+   #  queryResult=Book.objects.filter(title__startswith="Py").annotate(num_authors=Count('authors')).values('num_authors','title')
+   # 统计不止一个作者的图书
+   #  queryResult=Book.objects.annotate(num_authors=Count('authors')).filter(num_authors__gte=1).values('num_authors','title')
 
+   # 根据一本图书作者数量的多少对查询集QuerySet进行排序
+   #  queryResult=Book.objects.annotate(num_authors=Count('authors')).order_by('-num_authors').values('num_authors')
+    # 查询各个作者出的书的总价格
+    # queryResult=Author.objects.annotate(SumPrice=Sum('book__price')).values('name','SumPrice')
 
-    print(queryResult)
-    # for q in queryResult:
-    #     print(q)
+# F查询
+#     queryResult=Book.objects.filter(publishDate__lt=F('atime')).values('publishDate','atime')
 
+# Q查询
+#     queryResult=Book.objects.filter(Q(authors__name="张居正")|Q(authors__name="张恒")).values('title','authors__name')
 
+    # queryResult=Book.objects.filter(Q(authors__name='司马迁')&~Q(publishDate__year=2012)).values('authors__name','authors','publishDate')
 
+    # queryResult=Book.objects.filter(Q(Q(authors__name='司马迁')&~Q(publishDate__year=2012))&Q(nid__gt=15)).values('authors__name','authors','publishDate','nid')
 
+    # 查询每个作者的姓名以及出版的书的 最高价格
+    # queryResult=Author.objects.values('name').annotate(max_price=Max('book__price'))
 
+# 查询作者id大于2作者的姓名以及出版的书的最高价格
+    queryResult=Author.objects.filter(nid__gt=2).annotate(max_price=Max('book__price')).values('name','max_price')
+
+# 查询每个作者出版的书的最高价格的平均值
+    queryResult=Author.objects.values('nid','name').annotate(max_price=Max('book__price')).aggregate(Avg('max_price'))
+
+    queryResult=Author.objects.annotate(max_price=Max('book__price')).aggregate(Avg('max_price'))
+    # print(queryResult)
+    for q in queryResult:
+        print(q)
 
 
 
@@ -128,13 +155,13 @@ if __name__=='__main__':
     books=Book.objects.raw('select * from app02_book',using='default')#执行原生SQL
 
 
-    # for i in books:
-    #     print(i.title,i.price,i.authors.all())
+    for i in books:
+        print(i.title,i.price,i.authors.all())
         # print(i)
-    # print(books.fetchone(),'------')
+    # print(books,'------')
 
     from django.db import connection,connections
-    cursor=connection.cursor()
+    cursor=connection.cursor()        #直接执行SQL语句
     cursor.execute("select * from app02_book")
     # print(cursor.fetchone())
     # print(cursor.fetchall())
